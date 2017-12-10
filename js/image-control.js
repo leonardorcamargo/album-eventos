@@ -5,13 +5,24 @@ function onClick(element) {
 }
 
 function proximaImagem(){
-    var imagem = localizaProximaImagem(imagemAtual());    
-    carregaImagem(imagem);
+    var imagem = localizaProximaImagem(imagemAtual());
+    
+    if (imagem === null) {
+        fecharImagem();
+    }
+    else{
+        carregaImagem(imagem);
+    }    
 }
 
 function imagemAnterior(){
     var imagem = localizaImagemAnterior(imagemAtual());
-    carregaImagem(imagem);
+    if (imagem === null){
+        fecharImagem();
+    }
+    else{
+        carregaImagem(imagem);
+    }
 }
 
 function listaImagens(){
@@ -32,7 +43,7 @@ function localizaProximaImagem(imagemAtual){
     else{
         for (let index = 0; index < imagens.length; index++) {
             if (imagens[index].src === imagemAtual.src){
-                return imagens[index + 1];
+                if (imagens[index + 1] === undefined){return null}else{return imagens[index + 1]}
             }
         }
     }
@@ -48,7 +59,7 @@ function localizaImagemAnterior(imagemAtual){
     else{
         for (let index = 0; index < imagens.length; index++) {
             if (imagens[index].src == imagemAtual.src){
-                return imagens[index - 1];
+                if (imagens[index - 1] === undefined){return null;}else{return imagens[index - 1];}
             }            
         }
     }
