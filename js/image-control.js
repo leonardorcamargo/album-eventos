@@ -1,4 +1,5 @@
-// Modal Image Gallery
+var patchBase = "";
+
 function onClick(element) {
     ampliaImagem(element);
     document.querySelector("#modal01").style.display = "block";
@@ -31,7 +32,7 @@ function listaImagens(){
 }
 
 function ampliaImagem(imagem){
-    document.querySelector("#idImagem").src = imagem.src;
+    document.querySelector("#idImagem").src = patchBase+"/"+imagem.id;
 }
 
 function localizaProximaImagem(imagemAtual){
@@ -74,8 +75,9 @@ function fecharImagem(){
     document.querySelector("#modal01").style.display="none";
 }
 
-function montaGridImagens(){
-    w3.getHttpObject("./img/2017-12-09/imagens.json", function(imagens){
+function montaGridImagens(patch){
+    patchBase = patch;
+    w3.getHttpObject(patchBase+"/imagens.json", function(imagens){
         criarEstruturaGrid(imagens);
     });
 }
@@ -83,7 +85,7 @@ function montaGridImagens(){
 function criarEstruturaGrid(imagens){    
     var gridImagens = document.querySelector("#idGridImagens");    
     imagens.forEach(imagem => {
-       gridImagens.appendChild(criaImagem(imagem));
+       gridImagens.appendChild(criaMiniaturaImagem(imagem));
     });
 }
 
@@ -93,13 +95,14 @@ function criaLinha(){
     return divLinha;
 }
 
-function criaImagem(caminhoImagem){
+function criaMiniaturaImagem(caminhoImagem){
     var img = document.createElement("img");
-    img.setAttribute("src","img/2017-12-09/"+caminhoImagem);
+    img.setAttribute("src",patchBase+"/miniaturas/"+caminhoImagem);
     img.classList.add("w3-third");    
     img.classList.add("photos");
+    img.setAttribute("id",caminhoImagem);
     img.setAttribute("onClick","onClick(this)");
     return img;
 }
 
-montaGridImagens();
+montaGridImagens("img/2017-12-09");

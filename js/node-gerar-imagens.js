@@ -1,16 +1,20 @@
 var fs = require('fs');
 var domain = require('domain').create();
 
-fs.readdir('../img/2017-12-09',function(error,files){
-    salvarJSON(JSON.stringify(files));
+fs.readdir('../img',function(error,files){
+    files.forEach(pasta => {
+        fs.readdir('../img/'+pasta,function(error,files){
+            salvarJSON(pasta,JSON.stringify(files));
+        });
+    });
 });
 
 domain.on("error",function(erros){
    console.log(erros);
 });
 
-function salvarJSON(lista){
-    fs.writeFile("../img/2017-12-09/imagens.json", lista, function(err) {
+function salvarJSON(pasta,lista){
+    fs.writeFile("../img/"+pasta+"/imagens.json", lista, function(err) {
         if(err) {
             console.log(err);
         } else {
