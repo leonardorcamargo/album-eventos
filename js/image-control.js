@@ -1,6 +1,6 @@
 // Modal Image Gallery
 function onClick(element) {
-    carregaImagem(element);
+    ampliaImagem(element);
     document.querySelector("#modal01").style.display = "block";
 }
 
@@ -11,7 +11,7 @@ function proximaImagem(){
         fecharImagem();
     }
     else{
-        carregaImagem(imagem);
+        ampliaImagem(imagem);
     }    
 }
 
@@ -21,7 +21,7 @@ function imagemAnterior(){
         fecharImagem();
     }
     else{
-        carregaImagem(imagem);
+        ampliaImagem(imagem);
     }
 }
 
@@ -30,7 +30,7 @@ function listaImagens(){
     return imagens;
 }
 
-function carregaImagem(imagem){
+function ampliaImagem(imagem){
     document.querySelector("#idImagem").src = imagem.src;
 }
 
@@ -73,3 +73,33 @@ function imagemAtual(){
 function fecharImagem(){
     document.querySelector("#modal01").style.display="none";
 }
+
+function montaGridImagens(){
+    w3.getHttpObject("../img/2017-12-09/imagens.json", function(imagens){
+        criarEstruturaGrid(imagens);
+    });
+}
+
+function criarEstruturaGrid(imagens){    
+    var gridImagens = document.querySelector("#idGridImagens");    
+    imagens.forEach(imagem => {
+       gridImagens.appendChild(criaImagem(imagem));
+    });
+}
+
+function criaLinha(){
+    var divLinha = document.createElement("div");
+    divLinha.classList.add("w3-third");
+    return divLinha;
+}
+
+function criaImagem(caminhoImagem){
+    var img = document.createElement("img");
+    img.setAttribute("src","img/2017-12-09/"+caminhoImagem);
+    img.classList.add("w3-third");    
+    img.classList.add("photos");
+    img.setAttribute("onClick","onClick(this)");
+    return img;
+}
+
+montaGridImagens();
