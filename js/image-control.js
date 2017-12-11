@@ -75,7 +75,7 @@ function fecharImagem(){
 }
 
 function montaGridImagens(){
-    w3.getHttpObject("../img/2017-12-09/imagens.json", function(imagens){
+    w3.getHttpObject("./img/2017-12-09/imagens.json", function(imagens){
         criarEstruturaGrid(imagens);
     });
 }
