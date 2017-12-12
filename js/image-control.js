@@ -32,7 +32,9 @@ function listaImagens(){
 }
 
 function ampliaImagem(imagem){
-    document.querySelector("#idImagem").src = patchBase+"/"+imagem.id;
+    var img = document.querySelector("#idImagem");
+    img.src = patchBase+"/"+imagem.id;
+    img.name = imagem.id; 
 }
 
 function localizaProximaImagem(imagemAtual){
@@ -43,7 +45,7 @@ function localizaProximaImagem(imagemAtual){
     }
     else{
         for (let index = 0; index < imagens.length; index++) {
-            if (imagens[index].src === imagemAtual.src){
+            if (imagens[index].id === imagemAtual.name){
                 if (imagens[index + 1] === undefined){return null}else{return imagens[index + 1]}
             }
         }
@@ -59,7 +61,7 @@ function localizaImagemAnterior(imagemAtual){
     }
     else{
         for (let index = 0; index < imagens.length; index++) {
-            if (imagens[index].src == imagemAtual.src){
+            if (imagens[index].id == imagemAtual.name){
                 if (imagens[index - 1] === undefined){return null;}else{return imagens[index - 1];}
             }            
         }
@@ -103,6 +105,47 @@ function criaMiniaturaImagem(caminhoImagem){
     img.setAttribute("id",caminhoImagem);
     img.setAttribute("onClick","onClick(this)");
     return img;
+}
+
+function clickImagem(img){
+    var pos = pegaPosicao(img);
+    if (pos = 0){
+        imagemAnterior();
+    }else if (pos = 1){
+        proximaImagem();
+    }else{
+        fecharImagem();
+    }
+}
+
+function pegaPosicao(obj){
+    var posicaoX = event.clientX - obj.getBoundingClientRect().left;
+    var widthImagem = obj.getBoundingClientRect().width;
+    if ((posicaoX > widthImagem) || (posicaoX < 0)){
+        return -1;
+    }
+    if (widthImagem / 2 > posicaoX){
+        return 0;
+    } else {
+        return 1;
+    };
+}
+
+function navegacaoImagem(){
+    var tecla = event.keyCode;
+    
+    if (document.querySelector("#modal01").style.display == "block"){
+        if(tecla == 37) {
+            //pressionado seta esquerda
+            imagemAnterior();
+        } else if(tecla == 39) {
+            //pressionado seta direita
+            proximaImagem();
+        } else if (tecla == 27) {
+            //pressionado ESC
+            fecharImagem();
+        }
+    }
 }
 
 montaGridImagens("img/2017-12-09");
