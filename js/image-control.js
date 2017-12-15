@@ -85,7 +85,7 @@ function fecharImagem(){
 
 function montaGridImagens(patch){
     patchBase = patch;
-    w3.getHttpObject(patchBase+"/imagens.json", function(imagens){
+    w3.getHttpObject("js/2017-12-09.json", function(imagens){
         criarEstruturaGrid(imagens);
     });
 }
