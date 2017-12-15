@@ -2,7 +2,13 @@ var patchBase = "";
 
 function onClick(element) {
     ampliaImagem(element);
-    document.querySelector("#modal01").style.display = "block";
+    var modal = document.querySelector("#modal01");
+    modal.style.display = "block";
+    modal.addEventListener("click",function(event){
+        if (event.target.getAttribute("id") == "modal01"){
+            fecharImagem();
+        }
+    });
 }
 
 function proximaImagem(){
@@ -33,7 +39,7 @@ function listaImagens(){
 
 function ampliaImagem(imagem){
     var img = document.querySelector("#idImagem");
-    img.src = patchBase+"/"+imagem.id;
+    img.src = patchBase+"/view/"+imagem.id;
     img.name = imagem.id; 
 }
 
@@ -97,14 +103,19 @@ function criaLinha(){
     return divLinha;
 }
 
-function criaMiniaturaImagem(caminhoImagem){
+function criaMiniaturaImagem(nomeImagem){
+    var card = document.createElement("div");
+    card.classList.add("w3-third");
+    card.classList.add("w3-card");
     var img = document.createElement("img");
-    img.setAttribute("src",patchBase+"/miniaturas/"+caminhoImagem);
-    img.classList.add("w3-third");    
+    img.setAttribute("src",patchBase+"/min/"+nomeImagem);
     img.classList.add("photos");
-    img.setAttribute("id",caminhoImagem);
+    img.setAttribute("id",nomeImagem);
+    img.style.width = "95%";
+    img.style.height= "auto";
     img.setAttribute("onClick","onClick(this)");
-    return img;
+    card.appendChild(img);
+    return card;
 }
 
 function clickImagem(img){
@@ -148,4 +159,4 @@ function navegacaoImagem(){
     }
 }
 
-montaGridImagens("img/2017-12-09");
+montaGridImagens("http://54.233.167.116/album-wsac/eventos/2017-12-09");
